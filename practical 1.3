@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* CSS Variables for Theming */
+        :root[data-theme="light"] {
+            --bg-color: #f8f9fa;
+            --container-bg-color: #ffffff;
+            --text-color: #212529;
+            --muted-text-color: #6c757d;
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --card-bg-color: #ffffff;
+            --border-color: #e9ecef;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+        :root[data-theme="dark"] {
+            --bg-color: #212529;
+            --container-bg-color: #343a40;
+            --text-color: #f8f9fa;
+            --muted-text-color: #adb5bd;
+            --primary-color: #0099ff;
+            --secondary-color: #ced4da;
+            --card-bg-color: #495057;
+            --border-color: #495057;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* --- */
+
+        /* Dashboard Layout using CSS Grid */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr;
+            grid-template-areas: "header" "main";
+            min-height: 100vh;
+        }
+
+        /* Desktop Layout */
+        @media (min-width: 992px) {
+            .dashboard-container {
+                grid-template-columns: 250px 1fr;
+                grid-template-rows: auto 1fr;
+                grid-template-areas: "sidebar header" "sidebar main";
+            }
+        }
+
+        /* Header */
+        header {
+            grid-area: header;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--container-bg-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Sidebar (Hidden on Mobile) */
+        .sidebar {
+            display: none;
+            grid-area: sidebar;
+            background-color: var(--container-bg-color);
+            padding: 2rem;
+            border-right: 1px solid var(--border-color);
+        }
+
+        @media (min-width: 992px) {
+            .sidebar {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav-item {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-nav-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            color: var(--muted-text-color);
+            border-radius: 8px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .sidebar-nav-item a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            grid-area: main;
+            padding: 2rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            padding: 1.5rem;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            background-color: var(--border-color);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .theme-switcher:hover {
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2 class="dashboard-title" style="color: var(--primary-color);">Admin Panel</h2>
+            <ul class="sidebar-nav">
+                <li class="sidebar-nav-item"><a href="#">Dashboard</a></li>
+                <li class="sidebar-nav-item"><a href="#">Users</a></li>
+                <li class="sidebar-nav-item"><a href="#">Products</a></li>
+                <li class="sidebar-nav-item"><a href="#">Analytics</a></li>
+                <li class="sidebar-nav-item"><a href="#">Settings</a></li>
+            </ul>
+        </aside>
+
+        <!-- Header -->
+        <header>
+            <span class="dashboard-title">Dashboard Overview</span>
+            <div class="header-right">
+                <button id="theme-toggle" class="theme-switcher">☀️</button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3 class="card-title">User Signups</h3>
+                    <p><strong>1,200</strong> new users this month.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Revenue</h3>
+                    <p><strong>$45,250</strong> this quarter.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Active Sessions</h3>
+                    <p><strong>356</strong> users currently online.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Recent Activity</h3>
+                    <ul>
+                        <li><small>New product added: 'Laptop Pro'</small></li>
+                        <li><small>User 'JaneDoe' updated profile</small></li>
+                        <li><small>Exported sales report</small></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript for Theme Switching -->
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.documentElement;
+
+        // Set initial theme based on user's preference or default to light
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        body.setAttribute('data-theme', currentTheme);
+        themeToggle.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+
+        themeToggle.addEventListener('click', () => {
+            let newTheme = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'light' ? '🌙' : '☀️';
+        });
+    </script>
+
+</body>
+</html>
