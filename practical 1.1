@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #4c51bf;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.2);
+        }
+
+        input:invalid:focus {
+            border-color: #e53e3e;
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.2);
+        }
+
+        input:valid:focus {
+            border-color: #38a169;
+            box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.2);
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4c51bf;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #3b42a0;
+            transform: translateY(-2px);
+        }
+
+        /* Basic form feedback for mobile */
+        input:invalid {
+            border-color: #e53e3e;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Student Registration</h2>
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="fullName">Full Name:</label>
+                <!-- Pattern ensures only letters and spaces are accepted. -->
+                <input type="text" id="fullName" name="fullName" required pattern="[A-Za-z\s]+" title="Name can only contain letters and spaces.">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <!-- type="email" provides built-in email format validation. -->
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <!-- Pattern ensures exactly 10 digits. -->
+                <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" title="Phone number must be exactly 10 digits.">
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <!-- type="date" provides a user-friendly date picker. -->
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+                <label for="course">Select Course:</label>
+                <!-- The required attribute ensures an option is selected. -->
+                <select id="course" name="course" required>
+                    <option value="" disabled selected>-- Choose a Course --</option>
+                    <option value="cs">Computer Science</option>
+                    <option value="it">Information Technology</option>
+                    <option value="ee">Electrical Engineering</option>
+                    <option value="me">Mechanical Engineering</option>
+                </select>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+</body>
+</html>
