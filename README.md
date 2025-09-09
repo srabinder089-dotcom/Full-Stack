@@ -1,4 +1,16 @@
 # Full-Stack
+practical 1.1
+![1 1](https://github.com/user-attachments/assets/ccd78e39-9b02-4d43-82ad-3bbc544eb9cf)
+
+practical 1.2
+
+![1 2](https://github.com/user-attachments/assets/7fb2edc4-fbbf-41f2-8968-6334301a6a50)
+
+practical 1.3
+
+
+![1 3](https://github.com/user-attachments/assets/b59607b5-71f4-42c8-89a8-2f852d6103eb)
+
 practical 2.1
 
 
