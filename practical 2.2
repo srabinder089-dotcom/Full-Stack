@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Product List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
+        <h1 class="text-3xl font-bold mb-4 text-center text-gray-800">Product Catalog</h1>
+        <p class="text-gray-600 text-center mb-6">Filter products by category using the dropdown menu below.</p>
+        
+        <div class="mb-6">
+            <label for="categoryFilter" class="block text-gray-700 font-medium mb-2">Filter by Category:</label>
+            <select id="categoryFilter" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+                <option value="all">All Categories</option>
+                <option value="electronics">Electronics</option>
+                <option value="books">Books</option>
+                <option value="home">Home Goods</option>
+            </select>
+        </div>
+
+        <div id="productList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Product Cards will be injected here by JavaScript -->
+        </div>
+
+    </div>
+
+    <script>
+        const products = [
+            { id: 1, name: 'Smartphone', category: 'electronics', price: '$699' },
+            { id: 2, name: 'Laptop', category: 'electronics', price: '$1200' },
+            { id: 3, name: 'The Martian', category: 'books', price: '$15' },
+            { id: 4, name: 'Coffee Maker', category: 'home', price: '$85' },
+            { id: 5, name: 'Smart TV', category: 'electronics', price: '$899' },
+            { id: 6, name: 'Dune', category: 'books', price: '$12' },
+            { id: 7, name: 'Potted Plant', category: 'home', price: '$30' }
+        ];
+
+        const productList = document.getElementById('productList');
+        const categoryFilter = document.getElementById('categoryFilter');
+
+        function renderProducts(filterCategory) {
+            productList.innerHTML = ''; // Clear the current products
+
+            const filteredProducts = products.filter(product => {
+                return filterCategory === 'all' || product.category === filterCategory;
+            });
+
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200';
+                productCard.innerHTML = `
+                    <h3 class="text-lg font-semibold text-gray-800">${product.name}</h3>
+                    <p class="text-sm text-gray-500 capitalize">${product.category}</p>
+                    <p class="text-xl font-bold text-gray-900 mt-2">${product.price}</p>
+                `;
+                productList.appendChild(productCard);
+            });
+        }
+
+        // Initial render on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts('all');
+        });
+
+        // Event listener for the dropdown filter
+        categoryFilter.addEventListener('change', (event) => {
+            const selectedCategory = event.target.value;
+            renderProducts(selectedCategory);
+        });
+    </script>
+
+</body>
+</html>
