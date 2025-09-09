@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Drawing Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        svg {
+            border: 2px solid #e5e7eb;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-4xl flex flex-col items-center">
+        <h1 class="text-3xl font-bold mb-4 text-center text-gray-800">Interactive SVG Drawing Tool</h1>
+        <p class="text-gray-600 text-center mb-6">Click and drag on the canvas to draw shapes.</p>
+
+        <div class="flex items-center space-x-4 mb-4">
+            <label for="shapeSelector" class="text-gray-700 font-medium">Select Shape:</label>
+            <select id="shapeSelector" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+                <option value="rect">Rectangle</option>
+                <option value="circle">Circle</option>
+            </select>
+            <button id="clearButton" class="px-4 py-2 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition-colors duration-200 shadow-sm">
+                Clear Canvas
+            </button>
+        </div>
+
+        <!-- The SVG canvas for drawing -->
+        <svg id="drawingCanvas" viewBox="0 0 800 600" class="w-full h-[60vh] rounded-lg"></svg>
+    </div>
+
+    <script>
+        // Get references to DOM elements
+        const drawingCanvas = document.getElementById('drawingCanvas');
+        const shapeSelector = document.getElementById('shapeSelector');
+        const clearButton = document.getElementById('clearButton');
+
+        // State variables for drawing logic
+        let isDrawing = false;
+        let startX, startY;
+        let currentShape;
+        let selectedShapeType = 'rect';
+
+        // Event listeners for drawing
+        drawingCanvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            // Get coordinates relative to the SVG canvas
+            const point = drawingCanvas.createSVGPoint();
+            point.x = e.clientX;
+            point.y = e.clientY;
+            const CTM = drawingCanvas.getScreenCTM().inverse();
+            const svgPoint = point.matrixTransform(CTM);
+
+            startX = svgPoint.x;
+            startY = svgPoint.y;
+
+            // Create a new shape element based on the selected type
+            if (selectedShapeType === 'rect') {
+                currentShape = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                currentShape.setAttribute('fill', 'rgba(0, 120, 255, 0.4)');
+                currentShape.setAttribute('stroke', '#0078ff');
+                currentShape.setAttribute('stroke-width', '2');
+            } else if (selectedShapeType === 'circle') {
+                currentShape = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                currentShape.setAttribute('fill', 'rgba(255, 80, 0, 0.4)');
+                currentShape.setAttribute('stroke', '#ff5000');
+                currentShape.setAttribute('stroke-width', '2');
+            }
+
+            // Set initial position
+            currentShape.setAttribute('x', startX);
+            currentShape.setAttribute('y', startY);
+            drawingCanvas.appendChild(currentShape);
+        });
+
+        drawingCanvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+
+            const point = drawingCanvas.createSVGPoint();
+            point.x = e.clientX;
+            point.y = e.clientY;
+            const CTM = drawingCanvas.getScreenCTM().inverse();
+            const svgPoint = point.matrixTransform(CTM);
+
+            const currentX = svgPoint.x;
+            const currentY = svgPoint.y;
+
+            if (selectedShapeType === 'rect') {
+                const newX = Math.min(startX, currentX);
+                const newY = Math.min(startY, currentY);
+                const width = Math.abs(currentX - startX);
+                const height = Math.abs(currentY - startY);
+                currentShape.setAttribute('x', newX);
+                currentShape.setAttribute('y', newY);
+                currentShape.setAttribute('width', width);
+                currentShape.setAttribute('height', height);
+            } else if (selectedShapeType === 'circle') {
+                const dx = currentX - startX;
+                const dy = currentY - startY;
+                const radius = Math.sqrt(dx * dx + dy * dy);
+                currentShape.setAttribute('cx', startX);
+                currentShape.setAttribute('cy', startY);
+                currentShape.setAttribute('r', radius);
+            }
+        });
+
+        drawingCanvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        // Event listener for the clear button
+        clearButton.addEventListener('click', () => {
+            while (drawingCanvas.firstChild) {
+                drawingCanvas.removeChild(drawingCanvas.firstChild);
+            }
+        });
+
+        // Event listener for the shape selector
+        shapeSelector.addEventListener('change', (e) => {
+            selectedShapeType = e.target.value;
+        });
+    </script>
+</body>
+</html>
