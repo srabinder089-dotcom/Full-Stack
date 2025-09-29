@@ -25,3 +25,15 @@ practical 2.3
 
 
 ![practical 2 3](https://github.com/user-attachments/assets/ef2da0f4-f5e9-4231-af32-95bf51d069d1)
+
+
+practical 4.1
+
+![4 12](https://github.com/user-attachments/assets/ca0fe500-c399-4a40-a682-be7009a68c85)
+![4 13](https://github.com/user-attachments/assets/9b7cb012-698e-4648-ae16-d0528f662ec5)
+
+practical 4.2
+![4 21](https://github.com/user-attachments/assets/d6fd4113-ad00-4a3d-a242-a1c8da100cad)
+![4 22](https://github.com/user-attachments/assets/2f0bc231-2913-4d74-bce7-98fa87469273)
+![4 23](https://github.com/user-attachments/assets/826de9ac-de6d-4bfb-ba4a-48b7bb3ae151)
+
